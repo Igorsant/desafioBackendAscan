@@ -1,0 +1,1 @@
+insert into iuser values (0, 'igor'), (1, 'ian');
