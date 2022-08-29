@@ -23,7 +23,7 @@ references status;
 create table event_history(
 	id serial primary key,
 	subscriptions_id integer references subscriptions,
-	type_value varchar(20),
+	type varchar(20),
 	created_at date default current_date
 );
 

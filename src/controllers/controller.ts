@@ -1,11 +1,22 @@
 import { Request, Response } from "express";
-import { knexInstance } from "../knex/knexInstance";
+import { selectFromSubscriptions } from "../database/resolvers";
 import { sendMessage } from "../rabbitmq/send";
 
-export const post = (_req: Request, res: Response) => {
-  sendMessage("SUBSCRIPTION_PURCHASED", {
-    userId: 1,
-    statusType: "SUBSCRIPTION_PURCHASED",
-  });
-  return res.status(201).send("Rota modified!");
+export const post = (req: Request, res: Response) => {
+  const { userId, subscriptionId } = req.body;
+
+  try {
+    selectFromSubscriptions(subscriptionId).then((data) => {
+      if (data.length == 0) {
+        sendMessage("SUBSCRIPTION_PURCHASED", {
+          userId,
+          subscriptionId,
+        });
+        return;
+      }
+    });
+    return res.status(201).send("Message sent!");
+  } catch (err) {
+    return res.status(503).send(err);
+  }
 };

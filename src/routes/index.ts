@@ -1,8 +1,8 @@
 import { Application } from "express";
-import { UsuarioRoutes } from "./route";
+import { subscriptionRoutes } from "./route";
 
 const Resolver = (app: Application) => {
-  UsuarioRoutes(app);
+  subscriptionRoutes(app);
 };
 
 export default Resolver;

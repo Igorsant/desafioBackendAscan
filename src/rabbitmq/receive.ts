@@ -1,5 +1,10 @@
 import { connect, Connection, Channel, Message } from "amqplib/callback_api";
-import { createSubscriptionFunction } from "../database/resolvers";
+import { subscriptionPurchasedHandler } from "../database/resolvers";
+import {
+  subscription_canceled,
+  subscription_purchased,
+  subscription_restarted,
+} from "../types";
 
 const resolveQueue = (
   name: string,
@@ -27,11 +32,12 @@ export const receiver = () => {
       if (error1) {
         throw error1;
       }
-      const subscription_purchased = "SUBSCRIPTION_PURCHASED";
-      const subscription_canceled = "SUBSCRIPTION_CANCELED";
-      const subscription_restarted = "SUBSCRIPTION_RESTARTED";
 
-      resolveQueue(subscription_purchased, channel, createSubscriptionFunction);
+      resolveQueue(
+        subscription_purchased,
+        channel,
+        subscriptionPurchasedHandler
+      );
       resolveQueue(subscription_canceled, channel, () => {});
       resolveQueue(subscription_restarted, channel, () => {});
     });

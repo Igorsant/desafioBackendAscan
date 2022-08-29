@@ -5,10 +5,11 @@ import { receiver } from "./rabbitmq/receive";
 
 const app = express();
 
-Resolver(app);
-
 app.use(cors());
 app.use(express.json());
+
+Resolver(app);
+
 app.listen(2000);
 
 receiver();
