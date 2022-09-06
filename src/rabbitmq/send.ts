@@ -16,7 +16,6 @@ export const sendMessage = (queue: string, msg: createMessage) => {
     });
     setTimeout(function () {
       connection.close();
-      process.exit(0);
     }, 500);
   });
 };

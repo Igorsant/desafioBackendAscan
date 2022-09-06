@@ -1,7 +1,11 @@
 import { Application, NextFunction, Request, Response } from "express";
 import { AnyZodObject } from "zod";
-import { post } from "../controllers/controller";
-import { createSchema } from "../schema";
+import {
+  cancelSubscriptionPatch,
+  createSubscriptionPost,
+  restartSubscriptionPatch,
+} from "../controllers/controller";
+import { createSchema, updateSchema } from "../schema";
 
 const validate =
   (schema: AnyZodObject) =>
@@ -19,5 +23,21 @@ const validate =
   };
 
 export const subscriptionRoutes = (app: Application) => {
-  app.post("/subscription", validate(createSchema), post);
+  app.post(
+    "/createSubscription",
+    validate(createSchema),
+    createSubscriptionPost
+  );
+
+  app.patch(
+    "/cancelSubscription",
+    validate(updateSchema),
+    cancelSubscriptionPatch
+  );
+
+  app.patch(
+    "/restartSubscription",
+    validate(updateSchema),
+    restartSubscriptionPatch
+  );
 };

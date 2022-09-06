@@ -1,8 +1,8 @@
 export interface createMessage {
   userId: number;
-  subscriptionId: number;
+  subscriptionId?: number;
 }
 
-export const subscription_purchased = "SUBSCRIPTION_PURCHASED";
-export const subscription_canceled = "SUBSCRIPTION_CANCELED";
-export const subscription_restarted = "SUBSCRIPTION_RESTARTED";
+export const SUBSCRIPTION_PURCHASED = "SUBSCRIPTION_PURCHASED";
+export const SUBSCRIPTION_CANCELED = "SUBSCRIPTION_CANCELED";
+export const SUBSCRIPTION_RESTARTED = "SUBSCRIPTION_RESTARTED";

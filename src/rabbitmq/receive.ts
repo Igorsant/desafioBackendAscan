@@ -1,9 +1,13 @@
 import { connect, Connection, Channel, Message } from "amqplib/callback_api";
-import { subscriptionPurchasedHandler } from "../database/resolvers";
 import {
-  subscription_canceled,
-  subscription_purchased,
-  subscription_restarted,
+  subscriptionCanceledHandler,
+  subscriptionPurchasedHandler,
+  subscriptionRestartedHandler,
+} from "../database/resolvers";
+import {
+  SUBSCRIPTION_CANCELED,
+  SUBSCRIPTION_PURCHASED,
+  SUBSCRIPTION_RESTARTED,
 } from "../types";
 
 const resolveQueue = (
@@ -34,12 +38,16 @@ export const receiver = () => {
       }
 
       resolveQueue(
-        subscription_purchased,
+        SUBSCRIPTION_PURCHASED,
         channel,
         subscriptionPurchasedHandler
       );
-      resolveQueue(subscription_canceled, channel, () => {});
-      resolveQueue(subscription_restarted, channel, () => {});
+      resolveQueue(SUBSCRIPTION_CANCELED, channel, subscriptionCanceledHandler);
+      resolveQueue(
+        SUBSCRIPTION_RESTARTED,
+        channel,
+        subscriptionRestartedHandler
+      );
     });
   });
 };
