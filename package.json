@@ -6,7 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "build": "tsc",
-    "start": "yarn migrate:up && ts-node ./src/index.ts",
+    "start": "ts-node ./src/index.ts",
     "start:dev": "nodemon",
     "migrate:up": "knex migrate:up --knexfile src/knexfile",
     "migrate:down": "knex migrate:down --knexfile src/knexfile",
