@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
-import { selectFromSubscriptions } from "../database/resolvers";
+import {
+  selectFromSubscriptions,
+  selectSubscriptionsIdsFromUser,
+} from "../database/resolvers";
 import { sendMessage } from "../rabbitmq/send";
 import {
   SUBSCRIPTION_CANCELED,
@@ -61,4 +64,16 @@ export const cancelSubscriptionPatch = (req: Request, res: Response) => {
   }
 
   return res.status(201).send(SUBSCRIPTION_CANCELED);
+};
+
+export const getIdsFromSubscriptions = (req: Request, res: Response) => {
+  const { userId } = req.params;
+
+  try {
+    return selectSubscriptionsIdsFromUser(parseInt(userId)).then((data) => {
+      return res.status(201).send(data.map((dataItem) => dataItem.id));
+    });
+  } catch (err) {
+    return res.status(403).send(err);
+  }
 };

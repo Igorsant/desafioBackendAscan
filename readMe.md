@@ -1,10 +1,29 @@
-## status table
+# Backend Challenge
 
-0: SUBSCRIPTION_PURCHASED
-1: SUBSCRIPTION_CANCELED
-2: SUBSCRIPTION_RESTARTED
+## To Run API
 
-to do:
+```bash
+yarn
+docker compose up -d
+yarn migrate:up
+yarn seed:run
+yarn start
+```
 
-- make validation based on user id and subscription id
-- create event_history for update subscription
+## Make Notifications
+
+```bash
+yarn send-notifications
+```
+
+## Routes
+
+POST /createSubscription { userId: ? }
+
+PATCH /cancelSubscription { userId: ?, subscriptionId: ? }
+
+PATCH /restartSubscription { userId: ?, subscriptionId: ? }
+
+GET /subscriptionsIds/:userId
+
+GET /usersIds

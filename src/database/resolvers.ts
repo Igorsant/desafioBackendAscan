@@ -45,6 +45,12 @@ export const selectFromSubscriptions = (id: number) => {
     .where("subscriptions.id", id);
 };
 
+export const selectSubscriptionsIdsFromUser = (userId: number) => {
+  return knexInstance("subscriptions")
+    .select("id")
+    .where("subscriptions.users_id", userId);
+};
+
 export const subscriptionCanceledHandler = (msg: Message | null) => {
   const { subscriptionId } = JSON.parse(
     msg?.content.toString() || ""
@@ -79,4 +85,8 @@ export const subscriptionRestartedHandler = (msg: Message | null) => {
         })
         .then((_id) => console.log("updated subscription to database"))
     );
+};
+
+export const selectUsersIds = () => {
+  return knexInstance("users").select("id");
 };

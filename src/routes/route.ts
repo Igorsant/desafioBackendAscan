@@ -3,8 +3,10 @@ import { AnyZodObject } from "zod";
 import {
   cancelSubscriptionPatch,
   createSubscriptionPost,
+  getIdsFromSubscriptions,
   restartSubscriptionPatch,
 } from "../controllers/controller";
+import { getUsersIds } from "../controllers/usersController";
 import { createSchema, updateSchema } from "../schema";
 
 const validate =
@@ -40,4 +42,7 @@ export const subscriptionRoutes = (app: Application) => {
     validate(updateSchema),
     restartSubscriptionPatch
   );
+
+  app.get("/subscriptionsIds/:userId", getIdsFromSubscriptions);
+  app.get("/usersIds", getUsersIds);
 };
